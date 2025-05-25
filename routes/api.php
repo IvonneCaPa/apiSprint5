@@ -14,5 +14,6 @@ Route::post('auth.register', [AuthController::class, 'register'])->name('api.reg
 Route::middleware('auth:api')->group(function()
     {
         Route::get('auth.user', [AuthController::class, 'user'])->name('api.auth.user');
+        Route::get('auth.logout', [AuthController::class, 'logout'])->name('api.auth.logout');
     }
 );

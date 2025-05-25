@@ -51,4 +51,18 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $this->assertArrayHasKey('user', $response->json());
     }
+
+    //cierra sesion
+        public function test_logout(){
+        $this->withExceptionHandling();
+        $token = $this->authenticated();
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer '.$token,
+        ])->get(route('api.auth.logout'));
+
+        $response->assertStatus(200);
+        $this->assertArrayHasKey('message', $response->json());
+        $this->assertEquals("Ha cerrado sesión correctamente", $response->json()['message'],);
+    }
 }

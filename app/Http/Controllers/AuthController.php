@@ -50,4 +50,19 @@ class AuthController extends Controller
             'user'=> Auth::user()
         ]);
     }
+
+    public function logout()
+    {
+        try {
+            Auth::user()->tokens()->delete();
+            return response([
+                'message' => "Ha cerrado sesión correctamente"
+            ]);
+        } catch (\Throwable $th) {
+            return response([
+                'error' => $th -> getMessage()
+            ], 500);
+        }
+        
+    }
 }

@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::post('auth.login', [AuthController::class, 'login'])->name('api.login');
+Route::post('auth.register', [AuthController::class, 'register'])->name('api.register');

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -30,5 +32,16 @@ class AuthController extends Controller
             ],
             'access_token' => $access_token
         ], 200);
+    }
+
+    public function register(RegisterRequest $request)
+        {
+        $user = User::create($request->all());
+        $access_token = $user->createToken('Auth_token')->accessToken;
+
+        return response([
+            'user'=> $user,
+            'access_token' => $access_token
+        ]);
     }
 }

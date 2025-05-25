@@ -44,4 +44,10 @@ class AuthController extends Controller
             'access_token' => $access_token
         ]);
     }
+
+    public function user(){
+        return response([
+            'user'=> Auth::user()
+        ]);
+    }
 }

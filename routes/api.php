@@ -10,3 +10,9 @@ Route::get('/user', function (Request $request) {
 
 Route::post('auth.login', [AuthController::class, 'login'])->name('api.login');
 Route::post('auth.register', [AuthController::class, 'register'])->name('api.register');
+
+Route::middleware('auth:api')->group(function()
+    {
+        Route::get('auth.user', [AuthController::class, 'user'])->name('api.auth.user');
+    }
+);

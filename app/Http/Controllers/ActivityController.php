@@ -14,4 +14,11 @@ class ActivityController extends Controller
             'activities'=> new ActivityResource(Activity::all())
         ]);
     }
+
+        public function show(Activity $activity)
+    {
+        return response([
+            'activity' => new ActivityResource($activity)
+        ]);
+    }
 }

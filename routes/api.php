@@ -14,6 +14,7 @@ Route::post('auth.login', [AuthController::class, 'login'])->name('api.login');
 Route::post('auth.register', [AuthController::class, 'register'])->name('api.register');
 
 Route::get('activities', [ActivityController::class, 'index'])->name('api.activities.index');
+Route::get('activities/{activity}', [ActivityController::class, 'show'])->name('api.activity.show');
 
 Route::middleware('auth:api')->group(function()
     {

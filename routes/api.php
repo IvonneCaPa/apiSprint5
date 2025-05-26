@@ -20,6 +20,7 @@ Route::middleware('auth:api')->group(function()
     {
         Route::get('auth.me', [AuthController::class, 'me'])->name('api.auth.me');
         Route::get('auth.logout', [AuthController::class, 'logout'])->name('api.auth.logout');
+        Route::post('activity/store', [ActivityController::class, 'store'])->name('api.activity.store');
     }
 );
 

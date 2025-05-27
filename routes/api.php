@@ -22,6 +22,7 @@ Route::middleware('auth:api')->group(function()
         Route::get('auth.logout', [AuthController::class, 'logout'])->name('api.auth.logout');
         Route::post('activity/store', [ActivityController::class, 'store'])->name('api.activity.store');
         Route::put('activity/update/{activity}', [ActivityController::class, 'update'])->name('api.activity.update');
+        Route::delete('activity/delete/{activity}', [ActivityController::class, 'destroy'])->name('api.activity.delete');
     }
 );
 

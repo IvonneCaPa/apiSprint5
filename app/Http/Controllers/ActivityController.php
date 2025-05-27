@@ -52,4 +52,12 @@ class ActivityController extends Controller
             ], 500);
         }
     }    
+
+    public function destroy(Activity $activity)
+    {
+        $activity->delete();
+        return response([
+            'message' => 'Actividad eliminada correctamente'
+        ], 200);
+    }
 }

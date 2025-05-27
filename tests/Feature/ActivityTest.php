@@ -74,7 +74,13 @@ class ActivityTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
+        $user = User::create([
+            'name' => 'garfield',
+            'email' => rand(12345, 678910) . '@info.com',
+            'role' => User::ADMINISTRADOR,
+            'password' => bcrypt('123456')
+        ]);
+
         $token = $user->createToken('Test Token')->accessToken;
 
         $response = $this->withHeaders([

@@ -25,7 +25,7 @@ class ActivityRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'site' => 'nullable|string|max:255',
-            'datetime' => 'required|date'
+            'dateTime' => 'required|date'
         ];
     }
 

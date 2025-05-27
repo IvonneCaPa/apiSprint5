@@ -17,6 +17,6 @@ class Activity extends Model
            'title',
            'description',
            'site',
-           'datetime'
+           'dateTime'
        ];
 }

@@ -37,4 +37,19 @@ class ActivityController extends Controller
                 ], 500);
             }
         }
+
+    public function update(ActivityRequest $request, Activity $activity)
+    {
+        try {
+            $activity->update($request->all());
+            return response([
+                'activity'=> new ActivityResource($activity),
+                'message' => 'Actividad actualizada correctamente'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
+    }    
 }

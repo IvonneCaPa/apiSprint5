@@ -47,7 +47,7 @@ class ActivityTest extends TestCase
         $this->assertArrayHasKey('activities', $response->json());
     }
 
-        // ver una
+    // ver una
     public function test_activity_can_be_retrieved()
     {
         $this->withoutExceptionHandling();
@@ -56,7 +56,7 @@ class ActivityTest extends TestCase
             'title'=>'Exposición fotos',
            'description'=>'Exposición fotografica del taller Senegal',
            'site'=>'Centro Civico X',
-           'datetime'=>'2025-08-15 17:00:11'
+           'dateTime'=>'2025-08-15 17:00:11'
         ]);
 
         $response = $this->get(route('api.activity.show', $activity->id));
@@ -64,7 +64,7 @@ class ActivityTest extends TestCase
         $this->assertEquals($activity->title, 'Exposición fotos');
         $this->assertEquals($activity->description, 'Exposición fotografica del taller Senegal');
         $this->assertEquals($activity->site, 'Centro Civico X');
-        $this->assertEquals($activity->datetime, '2025-08-15 17:00:11');
+        $this->assertEquals($activity->dateTime, '2025-08-15 17:00:11');
 
         $response->assertStatus(200);
     }
@@ -83,7 +83,7 @@ class ActivityTest extends TestCase
             'title' => 'Exposición fotos',
             'description' => 'Exposición fotografica del taller Senegal',
             'site' => 'Centro Civico X',
-            'datetime' => '2025-08-15 17:00:11'
+            'dateTime' => '2025-08-15 17:00:11'
         ]);
 
         $response->assertStatus(201);

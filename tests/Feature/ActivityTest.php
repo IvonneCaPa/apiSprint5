@@ -89,4 +89,39 @@ class ActivityTest extends TestCase
         $response->assertStatus(201);
         $this->assertCount(1, Activity::all());
     }
+
+    //editar
+    public function test_a_activity_can_be_update()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $activity = Activity::create([
+            'title' => 'expo',
+           'description' => 'descripcion expo',
+           'site' => 'galeria',
+           'dateTime' => '2025-09-15 17:00:11'
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json'
+        ])->put(route('api.activity.update', $activity->id),[
+            'title' => 'expo1',
+           'description' => 'descripcion expo1',
+           'site' => 'galeria1',
+           'dateTime' => '2025-10-12 18:00:11'
+        ]);
+
+        $updatedActivity = Activity::find($activity->id);
+
+        $this->assertEquals($updatedActivity->title, 'expo1');
+        $this->assertEquals($updatedActivity->description, "descripcion expo1");
+        $this->assertEquals($updatedActivity->site, 'galeria1');
+        $this->assertEquals($updatedActivity->dateTime, '2025-10-12 18:00:11');
+        $this->assertArrayHasKey('activity', $response->json());
+        $response->assertJsonMissing(['error']);
+        $response->assertStatus(200);
+    }
 }

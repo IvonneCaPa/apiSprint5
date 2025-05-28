@@ -48,22 +48,23 @@ class GalleryTest extends TestCase
         $response->assertStatus(200);
         $this->assertArrayHasKey('galleries', $response->json());
     }
-
+    //ver uno
     public function test_gallery_can_be_retrieved()
     {
         $this->withoutExceptionHandling();
 
         $gallery = Gallery::create([
-            'title'=>'Expo',
-            'date'=>'2025-08-15',
-            'site'=>'Senegal'
+            'title' => 'Exposición fotos',
+            'date' => '2025-08-15',
+            'site' => 'Centro Civico X'
         ]);
 
         $response = $this->get(route('api.gallery.show', $gallery->id));
 
-        $this->assertEquals($gallery->title, 'Expo');
-        $this->assertEquals($gallery->date, '2025-08-15');
-        $this->assertEquals($gallery->site, 'Senegal');
+        $this->assertEquals($gallery->title, 'Exposición fotos');
+        $this->assertEquals($gallery->date->toDateString(), '2025-08-15');
+        $this->assertEquals($gallery->site, 'Centro Civico X');
+        $this->assertArrayHasKey('gallery', $response->json());
 
         $response->assertStatus(200);
     }

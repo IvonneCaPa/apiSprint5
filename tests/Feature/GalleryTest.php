@@ -87,5 +87,37 @@ class GalleryTest extends TestCase
         $response->assertStatus(201);
         $this->assertCount(1, Gallery::all());
     }
+
+    //editar
+    public function test_a_gallery_can_be_update()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $gallery = Gallery::create([
+            'title' => 'expo',
+           'site' => 'galeria',
+           'date' => '2025-09-15'
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json'
+        ])->put(route('api.gallery.update', $gallery->id),[
+            'title' => 'expo1',
+           'site' => 'galeria1',
+           'dateTime' => '2025-10-12'
+        ]);
+
+        $updatedGallery = Gallery::find($gallery->id);
+
+        $this->assertEquals($updatedGallery->title, 'expo1');
+        $this->assertEquals($updatedGallery->site, 'galeria1');
+        $this->assertEquals($updatedGallery->date, '2025-10-12');
+        $this->assertArrayHasKey('gallery', $response->json());
+        $response->assertJsonMissing(['error']);
+        $response->assertStatus(200);
+    }
     
 }

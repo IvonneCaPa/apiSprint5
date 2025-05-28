@@ -32,4 +32,5 @@
         Route::post('activity/store', [ActivityController::class, 'store'])->name('api.activity.store');
         Route::put('activity/update/{activity}', [ActivityController::class, 'update'])->name('api.activity.update');
         Route::delete('activity/delete/{activity}', [ActivityController::class, 'destroy'])->name('api.activity.delete');
+        Route::post('gallery/store', [GalleryController::class, 'store'])->name('api.gallery.store');
     });

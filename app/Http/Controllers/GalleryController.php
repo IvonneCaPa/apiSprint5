@@ -22,4 +22,9 @@ class GalleryController extends Controller
             'gallery'=> new GalleryResource($gallery)
         ]);
     }
+
+    public function store(GalleryRequest $request)
+    {
+        
+    }
 }

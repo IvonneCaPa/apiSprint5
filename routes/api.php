@@ -4,6 +4,7 @@
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\ActivityController;
+    use App\Http\Controllers\GalleryController;
 
     // Ruta para obtener usuario autenticado
     Route::get('/user', function (Request $request) {
@@ -17,6 +18,7 @@
     // Rutas públicas para consultar actividades
     Route::get('activities', [ActivityController::class, 'index'])->name('api.activities.index');
     Route::get('activities/{activity}', [ActivityController::class, 'show'])->name('api.activity.show');
+    Route::get('galleries', [GalleryController::class, 'index'])->name('api.galleries.index');
 
     // Rutas que requieren autenticación
     Route::middleware('auth:api')->group(function() {

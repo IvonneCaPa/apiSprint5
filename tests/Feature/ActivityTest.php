@@ -74,14 +74,7 @@ class ActivityTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::create([
-            'name' => 'garfield',
-            'email' => rand(12345, 678910) . '@info.com',
-            'role' => User::ADMINISTRADOR,
-            'password' => bcrypt('123456')
-        ]);
-
-        $token = $user->createToken('Test Token')->accessToken;
+        $token = $this->authenticated();
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,

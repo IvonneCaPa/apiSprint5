@@ -68,4 +68,31 @@ class GalleryTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+     //crear
+    public function test_a_gallery_can_be_created()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::create([
+            'name' => 'garfield',
+            'email' => rand(12345, 678910) . '@info.com',
+            'role' => User::ADMINISTRADOR,
+            'password' => bcrypt('123456')
+        ]);
+
+        $token = $user->createToken('Test Token')->accessToken;
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->post(route('api.gallery.store'), [
+            'title' => 'Exposición 23',
+            'date' => '2025-09-15',
+            'site' => 'Centro Civico X'
+        ]);
+
+        $response->assertStatus(201);
+        $this->assertCount(1, Gallery::all());
+    }
+    
 }

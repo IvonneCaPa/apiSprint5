@@ -6,6 +6,7 @@ use App\Http\Resources\ActivityResource;
 use Illuminate\Http\Request;
 use App\Http\Resources\GalleryResource;
 use App\Models\Gallery;
+use App\Http\Requests\GalleryRequest;
 
 class GalleryController extends Controller
 {
@@ -25,6 +26,17 @@ class GalleryController extends Controller
 
     public function store(GalleryRequest $request)
     {
-        
+        try {
+            $gallery = Gallery::create($request->all());
+            return response([
+                'gallery'=> new GalleryResource($gallery),
+                'message' => 'Galeria creada correctamente'
+            ], 201);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
     }
 }

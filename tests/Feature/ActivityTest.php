@@ -39,7 +39,8 @@ class ActivityTest extends TestCase
     }
  
     //ver todas
-    public function test_activities_can_be_retrieved(){
+    public function test_activities_can_be_retrieved()
+    {
         $this->withoutExceptionHandling();
 
         $response = $this->get(route('api.activities.index'));

@@ -104,17 +104,17 @@ class GalleryTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->put(route('api.gallery.update', $gallery->id),[
+        ])->put(route('api.gallery.update', $gallery->id), [
             'title' => 'expo1',
-           'site' => 'galeria1',
-           'dateTime' => '2025-10-12'
+            'site' => 'galeria1',
+            'date' => '2025-10-12'
         ]);
 
         $updatedGallery = Gallery::find($gallery->id);
 
         $this->assertEquals($updatedGallery->title, 'expo1');
         $this->assertEquals($updatedGallery->site, 'galeria1');
-        $this->assertEquals($updatedGallery->date, '2025-10-12');
+        $this->assertEquals($updatedGallery->date->toDateString(), '2025-10-12');
         $this->assertArrayHasKey('gallery', $response->json());
         $response->assertJsonMissing(['error']);
         $response->assertStatus(200);

@@ -39,4 +39,18 @@ class GalleryController extends Controller
             ], 500);
         }
     }
+
+    public function update(GalleryRequest $request, Gallery $gallery) {
+        try {
+            $gallery->update($request->all());
+            return response([
+                'gallery'=> new GalleryResource($gallery),
+                'message' => 'Galería actualizada correctamente'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response([
+                'error'=>$th->getMessage()
+            ], 500);
+        }
+    }
 }

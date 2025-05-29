@@ -119,5 +119,28 @@ class GalleryTest extends TestCase
         $response->assertJsonMissing(['error']);
         $response->assertStatus(200);
     }
+
+       //eliminar
+    public function test_a_gallery_can_be_delete()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $gallery = Gallery::create([
+            'title' => 'expo1',
+            'site' => 'galeria1',
+            'date' => '2025-10-12'
+        ]);
+        
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json'
+        ])->delete(route('api.gallery.delete', $gallery->id));
+
+        $this->assertCount(0, Gallery::all());
+        $response->assertStatus(200);
+    }
+   
     
 }

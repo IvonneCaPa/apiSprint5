@@ -46,9 +46,11 @@ class UserTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer '.$token,
             'Accept' => 'application/json'
-        ])->get(route('api.auth.user'));
+        ])->get('/api/user');
 
         $response->assertStatus(200);
-        $this->assertArrayHasKey('user', $response->json());
+        $this->assertArrayHasKey('id', $response->json());
+        $this->assertArrayHasKey('name', $response->json());
+        $this->assertArrayHasKey('email', $response->json());
     }
 }

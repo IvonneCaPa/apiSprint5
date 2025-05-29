@@ -11,7 +11,7 @@ class PhotoController extends Controller
 {
     public function index(){
         return response([
-            'photos' => new PhotoResource(Photo::all())
+            'photos' => new PhotoResource(photo::with('gallery')->get())
         ]);
     }
 }

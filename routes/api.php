@@ -5,6 +5,9 @@
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\ActivityController;
     use App\Http\Controllers\GalleryController;
+    use App\Http\Controllers\PhotoController;
+
+
 
     // Ruta para obtener usuario autenticado
     Route::get('/user', function (Request $request) {

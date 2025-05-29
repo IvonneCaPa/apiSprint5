@@ -15,11 +15,12 @@
     Route::post('auth.login', [AuthController::class, 'login'])->name('api.login');
     Route::post('auth.register', [AuthController::class, 'register'])->name('api.register');
 
-    // Rutas públicas para consultar actividades
+    // Rutas públicas para consultar
     Route::get('activities', [ActivityController::class, 'index'])->name('api.activities.index');
     Route::get('activities/{activity}', [ActivityController::class, 'show'])->name('api.activity.show');
     Route::get('galleries', [GalleryController::class, 'index'])->name('api.galleries.index');
     Route::get('galleries/{gallery}', [GalleryController::class, 'show'])->name('api.gallery.show');
+    Route::get('photos', [PhotoController::class, 'index'])->name('api.photos.index');
 
     // Rutas que requieren autenticación
     Route::middleware('auth:api')->group(function() {

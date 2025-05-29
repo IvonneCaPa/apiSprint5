@@ -53,4 +53,12 @@ class GalleryController extends Controller
             ], 500);
         }
     }
+
+    public function destroy(Gallery $gallery)
+    {
+        $gallery->delete();
+        return response([
+            'message' => 'Galeria eliminada correctamente'
+        ], 200);
+    }  
 }

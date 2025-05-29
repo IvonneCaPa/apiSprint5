@@ -140,7 +140,5 @@ class GalleryTest extends TestCase
 
         $this->assertCount(0, Gallery::all());
         $response->assertStatus(200);
-    }
-   
-    
+    } 
 }

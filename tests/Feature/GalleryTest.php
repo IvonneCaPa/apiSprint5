@@ -120,7 +120,7 @@ class GalleryTest extends TestCase
         $response->assertStatus(200);
     }
 
-       //eliminar
+    //eliminar
     public function test_a_gallery_can_be_delete()
     {
         $this->withoutExceptionHandling();

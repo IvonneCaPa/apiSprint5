@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\PhotoResource;
+use App\Models\Photo;
+
 
 class PhotoController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         return response([
-            'photos' => new PhotoResource(Photo::with)
+            'photos' => new PhotoResource(Photo::all())
         ]);
     }
 }

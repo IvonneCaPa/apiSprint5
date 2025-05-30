@@ -92,4 +92,28 @@ class PhotoTest extends TestCase
         $this->assertEquals($gallery->id, $photo->gallery_id);
         $this->assertEquals('Foto de prueba', $photo->title);
     }
+
+    public function test_a_photo_can_be_retrieved()
+    {
+        $this->withoutExceptionHandling();
+
+        $gallery = Gallery::create([
+            'title' => 'Exposición fotos',
+            'date' => '2025-08-15',
+            'site' => 'Centro Civico X'
+        ]);
+
+        $file = UploadedFile::fake()->image('foto_test.jpg');
+
+        $photo = Photo::create([
+            'gallery_id' => $gallery->id,
+            'title' => 'Foto de prueba',
+            'location' => $file 
+        ]);
+
+        $response = $this->get(route('api.photo.show', $photo->id));
+
+        $response -> assertStatus(200);
+        $this->assertArrayHasKey('photo', $response->json());
+    }
 }

@@ -43,7 +43,7 @@ class PhotoTest extends TestCase
 
         return $response->json()['access_token'];
     }
-
+    //ver todos
     public function test_photos_can_be_retrieved()
     {
         $this->withoutExceptionHandling();
@@ -52,7 +52,7 @@ class PhotoTest extends TestCase
         $response->assertStatus(200);
         $this->assertArrayHasKey('photos', $response->json());
     }
-
+    //crear
     public function test_a_photo_can_be_uploaded()
     {
         $this->withoutExceptionHandling();
@@ -92,7 +92,7 @@ class PhotoTest extends TestCase
         $this->assertEquals($gallery->id, $photo->gallery_id);
         $this->assertEquals('Foto de prueba', $photo->title);
     }
-
+    //ver 1
     public function test_a_photo_can_be_retrieved()
     {
         $this->withoutExceptionHandling();

@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
+    //ver todos
     public function index(){
         return response([
             'photos' => PhotoResource::collection(Photo::with('gallery')->get())
+        ]);
+    }
+
+    //ver uno
+    public function show(Photo $photo)
+    {
+        return response([
+            'photo' => new PhotoResource($photo) 
         ]);
     }
 
@@ -44,4 +53,6 @@ class PhotoController extends Controller
             ], 500);
         }
     }
+
+    
 }

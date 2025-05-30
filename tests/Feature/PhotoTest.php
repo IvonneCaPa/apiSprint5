@@ -84,7 +84,10 @@ class PhotoTest extends TestCase
         $this->assertArrayHasKey('photo', $response->json());
         
         $photo = Photo::first();
-        Storage::disk('public')->assertExists($photo->location);
+        $this->assertTrue(
+     Storage::disk('public')->exists($photo->location),
+            'El archivo de la foto no existe en el disco público'
+        );
         
         $this->assertEquals($gallery->id, $photo->gallery_id);
         $this->assertEquals('Foto de prueba', $photo->title);

@@ -6,13 +6,13 @@ use App\Http\Requests\PhotoRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\PhotoResource;
 use App\Models\Photo;
-
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
     public function index(){
         return response([
-            'photos' => new PhotoResource(photo::with('gallery')->get())
+            'photos' => PhotoResource::collection(Photo::with('gallery')->get())
         ]);
     }
 
@@ -20,15 +20,17 @@ class PhotoController extends Controller
     public function store(PhotoRequest $request)
     {
         try {
+            $path = null;
+            
             if($request->hasFile('location')){
                 $location = $request->file('location');
-                $path = $location->store('photos');
-            };
+                $path = $location->store('photos', 'public');
+            }
 
             $photo = Photo::create([
                 'title' => $request->title,
                 'location' => $path,
-                'gallery_id' => $request->gallery->id, 
+                'gallery_id' => $request->gallery_id, 
             ]);
 
             return response([

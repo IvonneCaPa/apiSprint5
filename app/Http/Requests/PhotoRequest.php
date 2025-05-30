@@ -11,7 +11,7 @@ class PhotoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,44 @@ class PhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'gallery_id' => 'required|integer|exists:galleries,id',
+            'title' => 'required|string|max:255',
+            'location' => 'required|file|mimes:jpeg,jpg,png,gif,webp|max:10240', 
+        ];
+    }
+
+    /**
+     * Get custom error messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'gallery_id.required' => 'El campo galería es obligatorio.',
+            'gallery_id.integer' => 'El ID de la galería debe ser un número entero.',
+            'gallery_id.exists' => 'La galería seleccionada no existe.',
+            'title.required' => 'El título de la foto es obligatorio.',
+            'title.string' => 'El título debe ser una cadena de texto.',
+            'title.max' => 'El título no puede tener más de 255 caracteres.',
+            'location.required' => 'Debe seleccionar un archivo de imagen.',
+            'location.file' => 'El archivo seleccionado no es válido.',
+            'location.mimes' => 'El archivo debe ser una imagen (jpeg, jpg, png, gif, webp).',
+            'location.max' => 'El archivo no puede ser mayor a 10MB.',
+        ];
+    }
+
+    /**
+     * Get custom attribute names for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'gallery_id' => 'galería',
+            'title' => 'título',
+            'location' => 'imagen',
         ];
     }
 }

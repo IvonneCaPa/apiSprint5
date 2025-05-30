@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PhotoRequest;
 use Illuminate\Http\Request;
 use App\Http\Resources\PhotoResource;
 use App\Models\Photo;
@@ -16,8 +17,8 @@ class PhotoController extends Controller
     }
 
     //crear
-    public function store()
+    public function store(PhotoRequest $request)
     {
-        
+
     }
 }

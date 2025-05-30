@@ -19,6 +19,27 @@ class PhotoController extends Controller
     //crear
     public function store(PhotoRequest $request)
     {
+        try {
+            if($request->hasFile('location')){
+                $location = $request->file('location');
+                $path = $location->store('photos');
+            };
 
+            $photo = Photo::create([
+                'title' => $request->title,
+                'location' => $path,
+                'gallery_id' => $request->gallery->id, 
+            ]);
+
+            return response([
+                'photo' => new PhotoResource($photo),
+                'message' => 'Foto subida satisfactoriamente'
+            ]);
+
+        } catch (\Throwable $th) {
+            return response([
+                'error'=> $th->getMessage()
+            ], 500);
+        }
     }
 }

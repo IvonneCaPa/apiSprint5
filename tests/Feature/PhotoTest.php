@@ -67,7 +67,7 @@ class PhotoTest extends TestCase
             'site' => 'Centro Civico X'
         ]);
 
-        $file = UploadedFile::fake()->create('foto_test.txt', 100);
+        $file = UploadedFile::fake()->image('foto_test.jpg');
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,

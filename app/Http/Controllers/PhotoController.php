@@ -14,4 +14,10 @@ class PhotoController extends Controller
             'photos' => new PhotoResource(photo::with('gallery')->get())
         ]);
     }
+
+    //crear
+    public function store()
+    {
+        
+    }
 }

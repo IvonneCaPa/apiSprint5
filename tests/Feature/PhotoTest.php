@@ -56,7 +56,7 @@ class PhotoTest extends TestCase
     public function test_a_photo_can_be_uploaded()
     {
         $this->withoutExceptionHandling();
-        
+        # teniendo
         Storage::fake('public');
 
         $token = $this->authenticated();
@@ -66,7 +66,7 @@ class PhotoTest extends TestCase
             'date' => '2025-08-15',
             'site' => 'Centro Civico X'
         ]);
-
+        #hago
         $file = UploadedFile::fake()->image('foto_test.jpg', 800, 600);
 
         $response = $this->withHeaders([
@@ -77,7 +77,7 @@ class PhotoTest extends TestCase
             'title' => 'Foto de prueba',
             'location' => $file 
         ]);
-
+        #espero
         $response->assertStatus(201);
         
         $this->assertCount(1, Photo::all());

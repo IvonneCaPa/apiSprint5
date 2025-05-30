@@ -103,12 +103,10 @@ class PhotoTest extends TestCase
             'site' => 'Centro Civico X'
         ]);
 
-        $file = UploadedFile::fake()->image('foto_test.jpg');
-
         $photo = Photo::create([
             'gallery_id' => $gallery->id,
             'title' => 'Foto de prueba',
-            'location' => $file 
+            'location' => 'photos/test-image.jpg'
         ]);
 
         $response = $this->get(route('api.photo.show', $photo->id));

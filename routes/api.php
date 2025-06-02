@@ -25,6 +25,7 @@
     Route::get('galleries/{gallery}', [GalleryController::class, 'show'])->name('api.gallery.show');
     Route::get('photos', [PhotoController::class, 'index'])->name('api.photos.index');
     Route::get('photos/{photo}', [PhotoController::class, 'show'])->name('api.photo.show');
+    Route::get('users', [UserController::class, 'index'])->name('api.users.index');
 
     // Rutas que requieren autenticación
     Route::middleware('auth:api')->group(function() {

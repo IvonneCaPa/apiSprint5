@@ -114,4 +114,43 @@ class PhotoTest extends TestCase
         $response -> assertStatus(200);
         $this->assertArrayHasKey('photo', $response->json());
     }
+
+    //editar
+    public function test_a_photo_can_be_update()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $gallery = Gallery::create([
+            'title' => 'Exposición fotos',
+            'date' => '2025-08-15',
+            'site' => 'Centro Civico X'
+        ]);
+
+        $file = UploadedFile::fake()->image('foto_test.jpg');
+        
+        $photo = Photo::create([
+            'gallery_id' => $gallery->id,
+            'title' => 'Foto de prueba',
+            'location' => $file->hashName()
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' .$token
+        ])->put(route('api.photo.update', $photo->id),[
+            'gallery_id' => $gallery->id,
+            'title' => 'Foto de prueba',
+            'location' => $file
+        ]);
+
+        $photoUpdated = Photo::find($photo->id);
+
+        $this->assertEquals($photoUpdated->gallery_id, $gallery->id);
+        $this->assertEquals($photoUpdated->tittle, 'Foto 2');
+        $this->assertEquals($photoUpdated->location, 'photos/' . $file->hashName());
+
+        $response->assertStatus(200);
+        $response->assertJsonMissing(['error']);
+    }
 }

@@ -141,7 +141,7 @@ class PhotoTest extends TestCase
             'Accept' => 'application/json'
         ])->put(route('api.photo.update', $photo->id),[
             'gallery_id' => $gallery->id,
-            'title' => 'Foto de prueba',
+            'title' => 'Foto 2',
             'location' => $file
         ]);
 

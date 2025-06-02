@@ -6,6 +6,7 @@
     use App\Http\Controllers\ActivityController;
     use App\Http\Controllers\GalleryController;
     use App\Http\Controllers\PhotoController;
+    use App\Http\Controllers\UserController;
 
 
 

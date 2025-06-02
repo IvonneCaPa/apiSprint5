@@ -82,5 +82,13 @@ class PhotoController extends Controller
             ], 500);
         }
     }
+
+    public function destroy(Photo $photo)
+    {
+        $photo->delete();
+        return response([
+            'message' => 'Foto eliminada correctamente'
+        ], 200);
+    }
     
 }

@@ -42,20 +42,19 @@ class AuthTest extends TestCase
 
         $this->withoutExceptionHandling();
         
-        #teniendo
+        $password = '123456';
         $user = User::create([
-            'name'=>'Manolita',
-            'email'=>'info@info.com',
-            'password'=>bcrypt('123456')
+        'name'=>'Manolita',
+        'email'=>'info@info.com',
+        'password'=>bcrypt($password)
         ]);
 
-        // Crear el cliente personal de Passport
-        $this->artisan('passport:client', [
-            '--personal' => true,
-            '--name' => 'Testing Client',
-            '--provider' => 'users'
+        #haciendo
+        $response = $this->post(route('api.login'),[
+            'email'=>$user->email, 
+            'password'=>$password  
         ]);
-        
+            
         #haciendo
         $response = $this->post(route('api.login'),[
             'email'=>'info@info.com',
@@ -67,6 +66,7 @@ class AuthTest extends TestCase
         $this->assertArrayHasKey('access_token', $response->json());
     }
 
+    //crear usuario
     public function test_register(){
         $this->withoutExceptionHandling();
         

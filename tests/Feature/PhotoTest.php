@@ -178,7 +178,7 @@ class PhotoTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' .$token,
             'Accept' => 'application/json'
-        ])->delete(route('api.photo.destroy', $photo->id));
+        ])->delete(route('api.photo.delete', $photo->id));
 
         $photoDeleted = Photo::find($photo->id);
 

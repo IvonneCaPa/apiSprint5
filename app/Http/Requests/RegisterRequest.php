@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
 
 class RegisterRequest extends FormRequest
 {
@@ -25,6 +26,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6',
+            'role' => 'required|in:' . User::USUARIO . ',' . User::ADMINISTRADOR,
         ];
     }
 
@@ -35,6 +37,8 @@ class RegisterRequest extends FormRequest
             'email.email' => 'El formato del email no es el correcto',
             'password.required' => 'El password es obligatorio',
             'password.min' => 'El mínimo para el password son 6 caracteres',
+            'role.required' => 'El rol es obligatorio',
+            'role.in' => 'El rol debe ser: usuario o administrador',
         ];
     }
 }

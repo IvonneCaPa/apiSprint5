@@ -54,5 +54,33 @@ class PhotoController extends Controller
         }
     }
 
+    public function update(PhotoRequest $request, Photo $photo)
+    {
+        try {
+            $path = null;
+            
+            if($request->hasFile('location')){
+                $location = $request->file('location');
+                $path = $location->store('photos', 'public');
+            }
+
+            $photo->gallery_id = $request->gallery_id;
+            $photo->title = $request->title;
+
+            if(isset($path)) $photo->location = $path;
+
+            $photo->save();
+
+            return response([
+                'photo' => new PhotoResource($photo),
+                'message' => 'Foto actualizada satisfactoriamente'
+            ]);
+
+        } catch (\Throwable $th) {
+            return response([
+                'error'=> $th->getMessage()
+            ], 500);
+        }
+    }
     
 }

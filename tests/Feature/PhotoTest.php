@@ -137,7 +137,8 @@ class PhotoTest extends TestCase
         ]);
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' .$token
+            'Authorization' => 'Bearer ' .$token,
+            'Accept' => 'application/json'
         ])->put(route('api.photo.update', $photo->id),[
             'gallery_id' => $gallery->id,
             'title' => 'Foto de prueba',
@@ -147,7 +148,7 @@ class PhotoTest extends TestCase
         $photoUpdated = Photo::find($photo->id);
 
         $this->assertEquals($photoUpdated->gallery_id, $gallery->id);
-        $this->assertEquals($photoUpdated->tittle, 'Foto 2');
+        $this->assertEquals($photoUpdated->title, 'Foto 2');
         $this->assertEquals($photoUpdated->location, 'photos/' . $file->hashName());
 
         $response->assertStatus(200);

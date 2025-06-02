@@ -154,4 +154,37 @@ class PhotoTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonMissing(['error']);
     }
+
+    public function test_a_photo_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $gallery = Gallery::create([
+            'title' => 'Exposición fotos',
+            'date' => '2025-08-15',
+            'site' => 'Centro Civico X'
+        ]);
+
+        $file = UploadedFile::fake()->image('foto_test.jpg');
+        
+        $photo = Photo::create([
+            'gallery_id' => $gallery->id,
+            'title' => 'Foto de prueba',
+            'location' => $file->hashName()
+        ]);
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' .$token,
+            'Accept' => 'application/json'
+        ])->delete(route('api.photo.destroy', $photo->id));
+
+        $photoDeleted = Photo::find($photo->id);
+
+        $this->assertEmpty($photoDeleted);
+        $response->assertStatus(200);
+
+
+    }
 }

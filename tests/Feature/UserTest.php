@@ -37,6 +37,18 @@ class UserTest extends TestCase
         return $response->json()['access_token'];
     }
 
+    // ver todos
+    public function test_a_users_can_be_retrieved()
+    {
+        $this->withoutExceptionHandling();
+
+        $response = $this->get(route('api.users.index'));
+        $response->assertStatus(200);
+        $this->assertArrayHasKey('users', $response->json());
+    }
+
+
+
     // test para recuperar un usuario
     public function test_a_user_can_be_retrieved()
     {        

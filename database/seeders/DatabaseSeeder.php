@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Activity;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Activity::factory(4)->create();
+        User::factory(4)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Activity::factory(20)->create();
+
+        $this->call([
+            GallerySeeder::class,
         ]);
     }
 }

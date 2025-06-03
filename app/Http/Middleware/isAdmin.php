@@ -6,6 +6,7 @@
     use Illuminate\Http\Request;
     use Symfony\Component\HttpFoundation\Response;
     use App\Models\User;
+    use Illuminate\Support\Facades\Auth;
 
     class isAdmin
     {
@@ -16,11 +17,11 @@
          */
         public function handle(Request $request, Closure $next): Response
         {
-            if (!auth()->check()) {
+            if (!Auth::check()) {
                 return redirect()->route('login');
             }
 
-            if (auth()->user()->role == User::ADMINISTRADOR) {
+            if (Auth::user()->role == User::ADMINISTRADOR) {
                 return $next($request);
             }
 

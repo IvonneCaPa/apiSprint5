@@ -11,64 +11,79 @@ use Illuminate\Http\Request;
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('passport:client', [
+            '--personal' => true,
+            '--name' => 'Testing Client',
+            '--provider' => 'users'
+        ]);
+    }
+
+    public function authenticated(){
+        $user = User::create([
+            'name'=>'garfield',
+            'email'=>rand(12345, 678910).'@info.com',
+            'role'=>User::ADMINISTRADOR,
+            'password'=>bcrypt('123456')
+        ]);
+
+        $response = $this->post(route('api.auths.login'), [
+            'email' => $user->email,
+            'password' => '123456'
+        ]);
+
+        return $response->json()['access_token'];
     }
 
     public function test_login(){
 
         $this->withoutExceptionHandling();
         
-        #teniendo
+        $password = '123456';
         $user = User::create([
-            'name'=>'Manolita',
-            'email'=>'info@info.com',
-            'password'=>bcrypt('123456')
+        'name'=>'Manolita',
+        'email'=>'info@info.com',
+        'password'=>bcrypt($password)
         ]);
 
-        // Crear el cliente personal de Passport
-        $this->artisan('passport:client', [
-            '--personal' => true,
-            '--name' => 'Testing Client',
-            '--provider' => 'users'
+        $response = $this->post(route('api.auths.login'),[
+            'email'=>$user->email, 
+            'password'=>$password  
         ]);
-        
-        #haciendo
-        $response = $this->post(route('api.login'),[
+            
+        $response = $this->post(route('api.auths.login'),[
             'email'=>'info@info.com',
             'password'=>'123456'
         ]);
 
-        #esperando
         $response->assertStatus(200);
         $this->assertArrayHasKey('access_token', $response->json());
     }
 
+    //crear usuario
     public function test_register(){
-        
-        $this->artisan('passport:client', [
-            '--personal' => true,
-            '--name' => 'Testing Client',
-            '--provider' => 'users'
-        ]);
-        
         $this->withoutExceptionHandling();
-
-        $response = $this->post(route('api.register'), [
+        
+         $userData = [
             'name'=> 'Manolita',
-            'email' => 'info@info.com',
+            'email' => 'info@info.com', 
             'role' => User::ADMINISTRADOR,
             'password' => '123456'
-        ]);
+        ];
+
+        $response = $this->post(route('api.auths.register'), $userData);
 
         $response->assertStatus(200);
         $this->assertArrayHasKey('access_token', $response->json());
+        
+        $this->assertDatabaseHas('users', [
+            'name' => 'Manolita',
+            'email' => 'info@info.com',
+            'role' => User::ADMINISTRADOR
+        ]);
     }
 }
    

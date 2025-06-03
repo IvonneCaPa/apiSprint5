@@ -36,7 +36,7 @@ class PhotoTest extends TestCase
             'password'=>bcrypt('123456')
         ]);
 
-        $response = $this->post(route('api.login'), [
+        $response = $this->post(route('api.auths.login'), [
             'email' => $user->email,
             'password' => '123456'
         ]);
@@ -72,7 +72,7 @@ class PhotoTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->post(route('api.photo.store'), [
+        ])->post(route('api.photos.store'), [
             'gallery_id' => $gallery->id,
             'title' => 'Foto de prueba',
             'location' => $file 
@@ -109,7 +109,7 @@ class PhotoTest extends TestCase
             'location' => 'photos/test-image.jpg'
         ]);
 
-        $response = $this->get(route('api.photo.show', $photo->id));
+        $response = $this->get(route('api.photos.show', $photo->id));
 
         $response -> assertStatus(200);
         $this->assertArrayHasKey('photo', $response->json());
@@ -139,7 +139,7 @@ class PhotoTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' .$token,
             'Accept' => 'application/json'
-        ])->put(route('api.photo.update', $photo->id),[
+        ])->put(route('api.photos.update', $photo->id),[
             'gallery_id' => $gallery->id,
             'title' => 'Foto 2',
             'location' => $file
@@ -178,7 +178,7 @@ class PhotoTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' .$token,
             'Accept' => 'application/json'
-        ])->delete(route('api.photo.delete', $photo->id));
+        ])->delete(route('api.photos.delete', $photo->id));
 
         $photoDeleted = Photo::find($photo->id);
 

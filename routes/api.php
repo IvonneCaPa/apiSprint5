@@ -23,7 +23,7 @@
 
     // Rutas que requieren autenticación
     Route::middleware('auth:api')->group(function() {
-        Route::get('auths.me', [AuthController::class, 'me'])->name('api.auths.me');
+        Route::get('auths.user', [AuthController::class, 'user'])->name('api.auths.user');
         Route::get('auths.logout', [AuthController::class, 'logout'])->name('api.auths.logout');
     });
 

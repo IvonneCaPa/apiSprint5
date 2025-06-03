@@ -30,7 +30,7 @@ class AuthTest extends TestCase
             'password'=>bcrypt('123456')
         ]);
 
-        $response = $this->post(route('api.login'), [
+        $response = $this->post(route('api.auths.login'), [
             'email' => $user->email,
             'password' => '123456'
         ]);
@@ -49,12 +49,12 @@ class AuthTest extends TestCase
         'password'=>bcrypt($password)
         ]);
 
-        $response = $this->post(route('api.login'),[
+        $response = $this->post(route('api.auths.login'),[
             'email'=>$user->email, 
             'password'=>$password  
         ]);
             
-        $response = $this->post(route('api.login'),[
+        $response = $this->post(route('api.auths.login'),[
             'email'=>'info@info.com',
             'password'=>'123456'
         ]);
@@ -74,7 +74,7 @@ class AuthTest extends TestCase
             'password' => '123456'
         ];
 
-        $response = $this->post(route('api.register'), $userData);
+        $response = $this->post(route('api.auths.register'), $userData);
 
         $response->assertStatus(200);
         $this->assertArrayHasKey('access_token', $response->json());

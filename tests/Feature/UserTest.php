@@ -29,7 +29,7 @@ class UserTest extends TestCase
             'password'=>bcrypt('123456')
         ]);
 
-        $response = $this->post(route('api.login'), [
+        $response = $this->post(route('api.auths.login'), [
             'email' => $user->email,
             'password' => '123456'
         ]);
@@ -56,12 +56,13 @@ class UserTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer '.$token,
             'Accept' => 'application/json'
-        ])->get('/api/user');
+        ])->get(route('api.auths.user'));
 
         $response->assertStatus(200);
-        $this->assertArrayHasKey('id', $response->json());
-        $this->assertArrayHasKey('name', $response->json());
-        $this->assertArrayHasKey('email', $response->json());
+        $user = $response->json()['user'];
+        $this->assertArrayHasKey('id', $user);
+        $this->assertArrayHasKey('name', $user);
+        $this->assertArrayHasKey('email', $user);
     }
 
     // test para editar un usuario
@@ -81,7 +82,7 @@ class UserTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->put(route('api.user.update', $user->id), [
+        ])->put(route('api.users.update', $user->id), [
             'name' => 'Usuario Actualizado',
             'email' => 'actualizado@test.com',
             'role' => User::ADMINISTRADOR
@@ -117,7 +118,7 @@ class UserTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->delete(route('api.user.delete', $user->id));
+        ])->delete(route('api.users.delete', $user->id));
 
         $this->assertCount(1, User::all()); 
         $this->assertNull(User::find($user->id)); 

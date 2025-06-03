@@ -30,7 +30,7 @@ class ActivityTest extends TestCase
             'password'=>bcrypt('123456')
         ]);
 
-        $response = $this->post(route('api.login'), [
+        $response = $this->post(route('api.auths.login'), [
             'email' => $user->email,
             'password' => '123456'
         ]);
@@ -60,7 +60,7 @@ class ActivityTest extends TestCase
            'dateTime'=>'2025-08-15 17:00:11'
         ]);
 
-        $response = $this->get(route('api.activity.show', $activity->id));
+        $response = $this->get(route('api.activities.show', $activity->id));
 
         $this->assertEquals($activity->title, 'Exposición fotos');
         $this->assertEquals($activity->description, 'Exposición fotografica del taller Senegal');
@@ -79,7 +79,7 @@ class ActivityTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->post(route('api.activity.store'), [
+        ])->post(route('api.activities.store'), [
             'title' => 'Exposición fotos',
             'description' => 'Exposición fotografica del taller Senegal',
             'site' => 'Centro Civico X',
@@ -107,7 +107,7 @@ class ActivityTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->put(route('api.activity.update', $activity->id),[
+        ])->put(route('api.activities.update', $activity->id),[
             'title' => 'expo1',
            'description' => 'descripcion expo1',
            'site' => 'galeria1',
@@ -142,7 +142,7 @@ class ActivityTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->delete(route('api.activity.delete', $activity->id));
+        ])->delete(route('api.activities.delete', $activity->id));
 
         $this->assertCount(0, Activity::all());
         $response->assertStatus(200);

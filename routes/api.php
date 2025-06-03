@@ -46,5 +46,5 @@
         Route::put('photo/update/{photo}', [PhotoController::class, 'update'])->name('api.photo.update');
         Route::delete('photo/delete/{photo}', [PhotoController::class, 'destroy'])->name('api.photo.delete');
         Route::put('user/apdate/{user}', [UserController::class, 'update'])->name('api.user.update');
-
+        Route::delete('user/delete/{user}', [UserController::class, 'destroy'])->name('api.user.delete');
     });

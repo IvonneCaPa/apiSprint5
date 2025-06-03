@@ -49,19 +49,16 @@ class AuthTest extends TestCase
         'password'=>bcrypt($password)
         ]);
 
-        #haciendo
         $response = $this->post(route('api.login'),[
             'email'=>$user->email, 
             'password'=>$password  
         ]);
             
-        #haciendo
         $response = $this->post(route('api.login'),[
             'email'=>'info@info.com',
             'password'=>'123456'
         ]);
 
-        #esperando
         $response->assertStatus(200);
         $this->assertArrayHasKey('access_token', $response->json());
     }

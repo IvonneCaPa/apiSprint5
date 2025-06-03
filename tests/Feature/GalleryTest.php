@@ -30,7 +30,7 @@ class GalleryTest extends TestCase
         'password'=>bcrypt('123456')
     ]);
 
-    $response = $this->post(route('api.login'), [
+    $response = $this->post(route('api.auths.login'), [
         'email' => $user->email,
         'password' => '123456'
     ]);
@@ -59,7 +59,7 @@ class GalleryTest extends TestCase
             'site' => 'Centro Civico X'
         ]);
 
-        $response = $this->get(route('api.gallery.show', $gallery->id));
+        $response = $this->get(route('api.galleries.show', $gallery->id));
 
         $this->assertEquals($gallery->title, 'Exposición fotos');
         $this->assertEquals($gallery->date->toDateString(), '2025-08-15');
@@ -78,7 +78,7 @@ class GalleryTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->post(route('api.gallery.store'), [
+        ])->post(route('api.galleries.store'), [
             'title' => 'Exposición 23',
             'date' => '2025-09-15',
             'site' => 'Centro Civico X'
@@ -104,7 +104,7 @@ class GalleryTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->put(route('api.gallery.update', $gallery->id), [
+        ])->put(route('api.galleries.update', $gallery->id), [
             'title' => 'expo1',
             'site' => 'galeria1',
             'date' => '2025-10-12'
@@ -136,7 +136,7 @@ class GalleryTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
-        ])->delete(route('api.gallery.delete', $gallery->id));
+        ])->delete(route('api.galleries.delete', $gallery->id));
 
         $this->assertCount(0, Gallery::all());
         $response->assertStatus(200);

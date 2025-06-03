@@ -98,4 +98,31 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
+    // test para eliminar un usuario
+    public function test_a_user_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        $token = $this->authenticated();
+
+        $user = User::create([
+            'name' => 'Usuario a Eliminar',
+            'email' => 'eliminar@test.com',
+            'role' => User::USUARIO,
+            'password' => bcrypt('password123')
+        ]);
+
+        $this->assertCount(2, User::all());
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json'
+        ])->delete(route('api.user.delete', $user->id));
+
+        $this->assertCount(1, User::all()); 
+        $this->assertNull(User::find($user->id)); 
+
+        $response->assertStatus(200);
+        $response->assertJsonMissing(['error']);
+    }
 }

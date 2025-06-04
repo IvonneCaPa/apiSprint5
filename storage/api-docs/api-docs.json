@@ -355,6 +355,214 @@
                     }
                 }
             }
+        },
+        "/api/galleries": {
+            "get": {
+                "tags": [
+                    "Galerías"
+                ],
+                "summary": "Obtener todas las galerías",
+                "operationId": "50a535d47353f8973824d41e101a1a9e",
+                "responses": {
+                    "200": {
+                        "description": "Lista de galerías",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "galleries": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Galerías"
+                ],
+                "summary": "Crear una nueva galería",
+                "operationId": "e879c41d931b6fb537c5c19ff8eff892",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Galería creada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "gallery": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/galleries/{gallery}": {
+            "get": {
+                "tags": [
+                    "Galerías"
+                ],
+                "summary": "Obtener una galería específica",
+                "operationId": "313655598f72fcde35abc3006c6148b1",
+                "parameters": [
+                    {
+                        "name": "gallery",
+                        "in": "path",
+                        "description": "ID de la galería",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la galería",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "gallery": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Galerías"
+                ],
+                "summary": "Actualizar una galería",
+                "operationId": "678994fdbea99d320b74e205d4c5da44",
+                "parameters": [
+                    {
+                        "name": "gallery",
+                        "in": "path",
+                        "description": "ID de la galería",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Galería actualizada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "gallery": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Galerías"
+                ],
+                "summary": "Eliminar una galería",
+                "operationId": "18a4980f80d8442af80b6d5a1196c9c0",
+                "parameters": [
+                    {
+                        "name": "gallery",
+                        "in": "path",
+                        "description": "ID de la galería",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Galería eliminada correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -365,6 +573,10 @@
         {
             "name": "Autenticación",
             "description": "Autenticación"
+        },
+        {
+            "name": "Galerías",
+            "description": "Galerías"
         }
     ]
 }

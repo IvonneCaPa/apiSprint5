@@ -6,6 +6,21 @@ use App\Http\Resources\ActivityResource;
 use App\Http\Requests\ActivityRequest;
 use App\Models\Activity;
 
+/**
+ * @OA\Get(
+ *     path="/api/activities",
+ *     summary="Obtener todas las actividades",
+ *     tags={"Actividades"},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lista de actividades",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="activities", type="array", @OA\Items(type="object"))
+ *         )
+ *     )
+ * )
+ */
+
 class ActivityController extends Controller
 {
     public function index()

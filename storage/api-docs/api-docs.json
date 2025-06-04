@@ -1,0 +1,48 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentación de la API Sprint 5",
+        "description": "Documentación de la API",
+        "contact": {
+            "email": "ivonnecp@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/activities": {
+            "get": {
+                "tags": [
+                    "Actividades"
+                ],
+                "summary": "Obtener todas las actividades",
+                "operationId": "69c4fdfcb7814c075663f2087e01ea02",
+                "responses": {
+                    "200": {
+                        "description": "Lista de actividades",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "activities": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Actividades",
+            "description": "Actividades"
+        }
+    ]
+}

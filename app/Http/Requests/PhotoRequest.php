@@ -21,11 +21,20 @@ class PhotoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'gallery_id' => 'required|integer|exists:galleries,id',
             'title' => 'required|string|max:255',
-            'location' => 'required|file|mimes:jpeg,jpg,png,gif,webp|max:10240', 
         ];
+
+        // Si es una creación, requerir location
+        if ($this->isMethod('POST')) {
+            $rules['location'] = 'required|file|mimes:jpeg,jpg,png,gif,webp|max:10240';
+        } else {
+            // Si es una actualización, location es opcional
+            $rules['location'] = 'nullable|file|mimes:jpeg,jpg,png,gif,webp|max:10240';
+        }
+
+        return $rules;
     }
 
     /**

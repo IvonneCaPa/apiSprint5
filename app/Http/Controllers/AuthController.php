@@ -133,7 +133,7 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            return response([
+        return response([
                 'user' => $user
             ]);
         } catch (\Exception $e) {

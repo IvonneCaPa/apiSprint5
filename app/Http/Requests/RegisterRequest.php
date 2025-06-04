@@ -23,9 +23,10 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required',
             'role' => 'required|in:' . User::USUARIO . ',' . User::ADMINISTRADOR,
         ];
     }
@@ -33,10 +34,15 @@ class RegisterRequest extends FormRequest
     public function messages(){
         return [
             'name.required' => 'El nombre es obligatorio',
+            'name.string' => 'El nombre debe ser texto',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
             'email.required' => 'El email es obligatorio',
             'email.email' => 'El formato del email no es el correcto',
+            'email.unique' => 'Este email ya está registrado',
             'password.required' => 'El password es obligatorio',
             'password.min' => 'El mínimo para el password son 6 caracteres',
+            'password.confirmed' => 'La confirmación del password no coincide',
+            'password_confirmation.required' => 'La confirmación del password es obligatoria',
             'role.required' => 'El rol es obligatorio',
             'role.in' => 'El rol debe ser: usuario o administrador',
         ];

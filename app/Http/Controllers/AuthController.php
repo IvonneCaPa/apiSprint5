@@ -112,8 +112,49 @@ class AuthController extends Controller
      * )
      */
     public function user(){
-        return response([
-            'user'=> Auth::user()
-        ]);
+        try {
+            $token = request()->bearerToken();
+            if (!$token) {
+                return response([
+                    'message' => 'Token no proporcionado',
+                    'debug' => [
+                        'headers' => request()->headers->all()
+                    ]
+                ], 401);
+            }
+
+            $user = Auth::user();
+            if (!$user) {
+                return response([
+                    'message' => 'Usuario no autenticado',
+                    'debug' => [
+                        'token' => $token,
+                        'auth_check' => Auth::check(),
+                        'auth_id' => Auth::id(),
+                        'guard' => Auth::getDefaultDriver()
+                    ]
+                ], 401);
+            }
+
+            return response([
+                'user' => $user,
+                'debug' => [
+                    'auth_check' => Auth::check(),
+                    'auth_id' => Auth::id(),
+                    'guard' => Auth::getDefaultDriver()
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'message' => 'Error al obtener el usuario',
+                'error' => $e->getMessage(),
+                'debug' => [
+                    'token' => request()->bearerToken(),
+                    'auth_check' => Auth::check(),
+                    'auth_id' => Auth::id(),
+                    'guard' => Auth::getDefaultDriver()
+                ]
+            ], 500);
+        }
     }
 }

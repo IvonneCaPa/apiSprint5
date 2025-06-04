@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('title', length: 20);
+            $table->string('title', length: 255);
             $table->text('description');
             $table->string('site', length: 45);
             $table->dateTime('dateTime');

@@ -67,8 +67,11 @@ class ActivityController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name"},
-     *             @OA\Property(property="name", type="string")
+     *             required={"title", "dateTime"},
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="site", type="string"),
+     *             @OA\Property(property="dateTime", type="string", format="date-time")
      *         )
      *     ),
      *     @OA\Response(

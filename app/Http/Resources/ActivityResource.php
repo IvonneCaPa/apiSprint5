@@ -16,7 +16,10 @@ class ActivityResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'title' => $this->title,
+            'description' => $this->description,
+            'site' => $this->site,
+            'dateTime' => $this->dateTime,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];

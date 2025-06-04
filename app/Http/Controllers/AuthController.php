@@ -10,7 +10,7 @@ use App\Models\User;
 
 /**
  * @OA\Post(
- *     path="/api/login",
+ *     path="/api/auths/login",
  *     summary="Iniciar sesión",
  *     tags={"Autenticación"},
  *     @OA\RequestBody(
@@ -64,16 +64,18 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/register",
+     *     path="/api/auths/register",
      *     summary="Registrar un nuevo usuario",
      *     tags={"Autenticación"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             required={"name", "email", "password"},
+     *             required={"name", "email", "password", "password_confirmation", "role"},
      *             @OA\Property(property="name", type="string"),
      *             @OA\Property(property="email", type="string", format="email"),
-     *             @OA\Property(property="password", type="string", format="password")
+     *             @OA\Property(property="password", type="string", format="password"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password"),
+     *             @OA\Property(property="role", type="string", enum={"usuario", "administrador"})
      *         )
      *     ),
      *     @OA\Response(
@@ -99,7 +101,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/user",
+     *     path="/api/auths/user",
      *     summary="Obtener información del usuario autenticado",
      *     tags={"Autenticación"},
      *     @OA\Response(
@@ -108,6 +110,10 @@ class AuthController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="user", type="object")
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="No autenticado"
      *     )
      * )
      */
@@ -116,44 +122,24 @@ class AuthController extends Controller
             $token = request()->bearerToken();
             if (!$token) {
                 return response([
-                    'message' => 'Token no proporcionado',
-                    'debug' => [
-                        'headers' => request()->headers->all()
-                    ]
+                    'message' => 'Token no proporcionado'
                 ], 401);
             }
 
             $user = Auth::user();
             if (!$user) {
                 return response([
-                    'message' => 'Usuario no autenticado',
-                    'debug' => [
-                        'token' => $token,
-                        'auth_check' => Auth::check(),
-                        'auth_id' => Auth::id(),
-                        'guard' => Auth::getDefaultDriver()
-                    ]
+                    'message' => 'Usuario no autenticado'
                 ], 401);
             }
 
             return response([
-                'user' => $user,
-                'debug' => [
-                    'auth_check' => Auth::check(),
-                    'auth_id' => Auth::id(),
-                    'guard' => Auth::getDefaultDriver()
-                ]
+                'user' => $user
             ]);
         } catch (\Exception $e) {
             return response([
                 'message' => 'Error al obtener el usuario',
-                'error' => $e->getMessage(),
-                'debug' => [
-                    'token' => request()->bearerToken(),
-                    'auth_check' => Auth::check(),
-                    'auth_id' => Auth::id(),
-                    'guard' => Auth::getDefaultDriver()
-                ]
+                'error' => $e->getMessage()
             ], 500);
         }
     }

@@ -71,7 +71,8 @@ class AuthTest extends TestCase
             'name'=> 'Manolita',
             'email' => 'info@info.com', 
             'role' => User::ADMINISTRADOR,
-            'password' => '123456'
+            'password' => '123456',
+            'password_confirmation' => '123456'
         ];
 
         $response = $this->post(route('api.auths.register'), $userData);

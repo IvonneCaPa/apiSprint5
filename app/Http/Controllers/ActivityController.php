@@ -26,7 +26,7 @@ class ActivityController extends Controller
     public function index()
     {
         return response([
-            'activities'=> new ActivityResource(Activity::all())
+            'activities'=> ActivityResource::collection(Activity::all())
         ]);
     }
 

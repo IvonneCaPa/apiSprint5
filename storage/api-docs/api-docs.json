@@ -563,6 +563,195 @@
                     }
                 }
             }
+        },
+        "/api/photos": {
+            "get": {
+                "tags": [
+                    "Fotos"
+                ],
+                "summary": "Obtener todas las fotos",
+                "operationId": "793cf02e220bab257709ded15be493c2",
+                "responses": {
+                    "200": {
+                        "description": "Lista de fotos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "photos": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fotos"
+                ],
+                "summary": "Crear una nueva foto",
+                "operationId": "e21993f5b41f1c66ee580264d09c4cea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "gallery_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "gallery_id": {
+                                        "type": "integer"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Foto subida satisfactoriamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "photo": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        },
+        "/api/photos/{photo}": {
+            "get": {
+                "tags": [
+                    "Fotos"
+                ],
+                "summary": "Obtener una foto específica",
+                "operationId": "271d6770e3400d50b59250f531c7f43c",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "ID de la foto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalles de la foto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "photo": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Fotos"
+                ],
+                "summary": "Actualizar una foto",
+                "operationId": "e2d69df94c930ebdde29461819af2834",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "path",
+                        "description": "ID de la foto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "gallery_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "gallery_id": {
+                                        "type": "integer"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Foto actualizada satisfactoriamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "photo": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -577,6 +766,10 @@
         {
             "name": "Galerías",
             "description": "Galerías"
+        },
+        {
+            "name": "Fotos",
+            "description": "Fotos"
         }
     ]
 }
